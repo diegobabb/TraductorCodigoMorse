@@ -14,23 +14,24 @@ import android.support.annotation.NonNull;
 public class SoundMaker {
 
     private Context context;
+    private AsyncPlayer asyncPlayer;
+    private Uri uriDot, uriDash;
+
 
     public SoundMaker(Context context) {
         this.context = context;
+        this.asyncPlayer = new AsyncPlayer("Sound");
+        this.uriDot = getUriToResource(context, R.raw.dot);
+        this.uriDash = getUriToResource(context, R.raw.dash);
     }
 
-    private void play(boolean sound) {
-        AsyncPlayer asyncPlayer = new AsyncPlayer("BeepPlayer");
-        Uri uri = (sound) ? this.getUriToResource(context, R.raw.dot) : this.getUriToResource(context, R.raw.dash);
-        asyncPlayer.play(context, uri, false, AudioManager.STREAM_RING);
-    }
 
     public void playDot() {
-        this.play(true);
+        asyncPlayer.play(context, uriDot, false, AudioManager.STREAM_MUSIC);
     }
 
     public void playDash() {
-        this.play(false);
+        asyncPlayer.play(context, uriDash, false, AudioManager.STREAM_MUSIC);
     }
 
     // Obtenido de https://stackoverflow.com/questions/45722227/how-to-get-an-uri-from-a-raw-resource

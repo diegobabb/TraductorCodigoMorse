@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,24 +20,29 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private boolean esTextEnMorse;
     private float ultimaMedicion;
     final int PUNTO_DE_TRADUCCION = 15000;
+    private SoundMaker soundMaker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         codigoMorse = findViewById(R.id.codigoMorse);
+        soundMaker = new SoundMaker(getApplication().getApplicationContext());
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         light = sensorManager != null ? sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT) : null;
         esTextEnMorse = true;
         ultimaMedicion = 0;
+
     }
 
     public void agregarRaya(View view) {
         codigoMorse.append("-");
+        soundMaker.playDash();
     }
 
     public void agregarPunto(View view) {
         codigoMorse.append(".");
+        soundMaker.playDot();
     }
 
     public void agregarEspacio(View view) {

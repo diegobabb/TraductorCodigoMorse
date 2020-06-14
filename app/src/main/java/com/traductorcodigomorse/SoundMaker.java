@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.media.AsyncPlayer;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.annotation.AnyRes;
 import android.support.annotation.NonNull;

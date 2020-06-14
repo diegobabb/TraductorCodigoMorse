@@ -9,12 +9,16 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     TextView codigoMorse;
+    EditText editTextPhone;
     private SensorManager sensorManager;
     private Sensor light;
     private boolean esTextEnMorse;
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         light = sensorManager != null ? sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT) : null;
         esTextEnMorse = true;
         ultimaMedicion = 0;
-
+        editTextPhone = findViewById(R.id.editTextPhone);
     }
 
     public void agregarRaya(View view) {
@@ -50,6 +54,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void enviar(View view) {
+        try {
+            SmsManager smgr = SmsManager.getDefault();
+            smgr.sendTextMessage(editTextPhone.getText().toString(), null, codigoMorse.getText().toString(), null, null);
+            Toast.makeText(MainActivity.this, "SMS Sent Successfully", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, "SMS Failed to Send, Please try again", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void borrar(View view) {
